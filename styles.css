@@ -2,6 +2,18 @@ body {
   text-align: center;
   font-size: 140%;
   font-family: sans-serif;
+
+  margin: 2.5vw;
+}
+
+a {
+  color: inherit;
+}
+
+main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
   display: grid;
   grid-template-areas:
     'name photo_casual'
@@ -13,18 +25,11 @@ body {
     'photo_bare_chest links'
     'footer footer'
     ;
-  grid-gap: 5em;
-  margin: 2.5em;
+  grid-gap: 5vw;
   grid-template-columns: repeat(2, 1fr);
 }
 
-a {
-  color: inherit;
-}
-
 .name {
-
-  font-size: 100%;
   grid-area: name;
 }
 
@@ -69,21 +74,10 @@ table tr {
 }
 
 table td {
-  padding: 0.5em 2em;
+  padding: 0.5em 1.5em;
 }
 
 
-.personal_details > * {
-
-}
-
-.key {
-  flex-basis: 6em;
-}
-
-.key::after {
-  content: ':';
-}
 
 .agency {
   grid-area: agency;
@@ -103,7 +97,7 @@ table td {
 }
 
 .agency_logo {
-  height: 6em;
+  height: 8vw;
   grid-area: logo;
 }
 
@@ -149,7 +143,7 @@ table td {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 2.5em;
+  padding-top: 2.5vw;
 }
 
 .footer > * {
