@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  font-size: 100%;
+  font-size: 140%;
   /* font-size: 2.5vw; */
   font-family: sans-serif;
 
@@ -222,6 +222,10 @@ main {
 
   .details_wrapper {
     grid-template-columns: 1fr;
+  }
+
+  body {
+    font-size: 100%;
   }
 
   main {
