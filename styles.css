@@ -1,0 +1,162 @@
+body {
+  text-align: center;
+  font-size: 140%;
+  font-family: sans-serif;
+  display: grid;
+  grid-template-areas:
+    'name photo_casual'
+    'photo_full photo_casual'
+    'photo_full personal'
+    'photo_full photo_suit'
+    'agency photo_suit'
+    'photo_bare_chest photo_suit'
+    'photo_bare_chest links'
+    'footer footer'
+    ;
+  grid-gap: 5em;
+  margin: 2.5em;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+a {
+  color: inherit;
+}
+
+.name {
+
+  font-size: 100%;
+  grid-area: name;
+}
+
+.name h1 {
+  margin: 0;
+}
+
+.name_reading {
+  font-size: 100%;
+  color: #888888;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+#photo_1 { grid-area: photo_1; display: none; }
+#photo_2 { grid-area: photo_2; display: none; }
+#photo_3 { grid-area: photo_3; display: none; }
+#photo_casual { grid-area: photo_casual; }
+#photo_bare_chest { grid-area: photo_bare_chest; }
+#photo_suit { grid-area: photo_suit; }
+#photo_full { grid-area: photo_full; }
+
+.personal_details {
+  grid-area: personal;
+}
+
+.personal_details table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+table tr {
+
+}
+
+table td {
+  padding: 0.5em 2em;
+}
+
+
+.personal_details > * {
+
+}
+
+.key {
+  flex-basis: 6em;
+}
+
+.key::after {
+  content: ':';
+}
+
+.agency {
+  grid-area: agency;
+}
+
+.agency_details {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-grid;
+  grid-template-areas:
+    'logo name'
+    'logo location'
+    'logo website';
+  grid-template-columns: auto auto;
+  grid-gap: 0.5em 4em;
+}
+
+.agency_logo {
+  height: 6em;
+  grid-area: logo;
+}
+
+.agency_name {
+  font-weight: bold;
+  grid-area: name;
+}
+
+.agency_website { grid-area: website; }
+.agency_location { grid-area: location; }
+
+.links {
+  grid-area: links;
+}
+
+.links_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.links a {
+  margin-bottom: 1em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.links a img {
+  height: 1.2em;
+}
+
+.links a > * {
+  margin: 0 0.25em;
+}
+
+
+.footer {
+  color: #666666;
+  font-size: 80%;
+  border-top: solid 1px #dddddd;
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2.5em;
+}
+
+.footer > * {
+  margin: 0 0.25em;
+}
+
+.footer .logo {
+  height: 1.2em;
+  width: 1.2em;
+}
