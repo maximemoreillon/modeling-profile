@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  font-size: 120%;
+  font-size: 110%;
   /* font-size: 2.5vw; */
   font-family: sans-serif;
 
@@ -198,8 +198,12 @@ main {
 }
 
 .footer .logo {
-  height: 1.2em;
-  width: 1.2em;
+  height: 2.5em;
+  width: 2.5em;
+}
+
+.app_info {
+  text-align: left;
 }
 
 
