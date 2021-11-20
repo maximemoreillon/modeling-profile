@@ -1,9 +1,10 @@
 body {
   text-align: center;
-  font-size: 140%;
+  font-size: 120%;
+  /* font-size: 2.5vw; */
   font-family: sans-serif;
 
-  margin: 2.5vw;
+  margin: 2.5em;
 }
 
 a {
@@ -50,9 +51,7 @@ main {
 
 
 
-#photo_1 { grid-area: photo_1; display: none; }
-#photo_2 { grid-area: photo_2; display: none; }
-#photo_3 { grid-area: photo_3; display: none; }
+
 #photo_casual { grid-area: photo_casual; }
 #photo_bare_chest { grid-area: photo_bare_chest; }
 #photo_suit { grid-area: photo_suit; }
@@ -62,19 +61,49 @@ main {
   grid-area: personal;
 }
 
-.personal_details table {
+.details_wrapper {
+  width: auto;
   margin-left: auto;
   margin-right: auto;
-  border-collapse: collapse;
-  text-align: left;
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
 }
 
-table tr {
-
+.detail {
+  display: flex;
+  flex-direction: column;
 }
 
-table td {
-  padding: 0.5em 1.5em;
+
+
+.detail:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.detail .key {
+  margin-bottom: 0.25em;
+  font-weight: bold;
+}
+
+.detail .value {
+  white-space: nowrap;
+}
+
+@media only screen and (min-width: 600px) {
+  .detail {
+    flex-direction: row;
+  }
+  .detail .key {
+    margin-right: 0.5em;
+  }
+
+  .detail .key::after {
+    content: ':';
+  }
+
+
 }
 
 
@@ -92,12 +121,12 @@ table td {
     'logo name'
     'logo location'
     'logo website';
-  grid-template-columns: auto auto;
-  grid-gap: 0.5em 4em;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 0.5em 2em;
 }
 
 .agency_logo {
-  height: 8vw;
+  height: 6em;
   grid-area: logo;
 }
 
@@ -120,10 +149,13 @@ table td {
 }
 
 .links a {
-  margin-bottom: 1em;
   text-decoration: none;
   display: flex;
   align-items: center;
+}
+
+.links a:not(:last-child) {
+  margin-bottom: 2em;
 }
 
 .links a img {
@@ -143,7 +175,7 @@ table td {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 2.5vw;
+  padding-top: 2.5em;
 }
 
 .footer > * {
