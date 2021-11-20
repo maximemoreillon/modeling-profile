@@ -170,15 +170,15 @@ main {
 }
 
 .links a:not(:last-child) {
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
 }
 
-.links a img {
+.links img {
   height: 1.2em;
 }
 
 .links a > * {
-  margin: 0 0.25em;
+  margin: 0.25em;
 }
 
 
@@ -200,4 +200,47 @@ main {
 .footer .logo {
   height: 1.2em;
   width: 1.2em;
+}
+
+
+@media only screen and (max-width: 700px) {
+  .agency_details {
+    text-align: center;
+    grid-template-areas:
+      'logo'
+      'name'
+      'location'
+      'website';
+    grid-template-columns: auto;
+    grid-gap: 0.5em 2em;
+    justify-items: center;
+  }
+
+  .details_wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  main {
+    /* grid-template-areas:
+      'name'
+      'photo_casual'
+      'photo_full photo_casual'
+      'photo_full personal'
+      'photo_full photo_suit'
+      'agency photo_suit'
+      'photo_bare_chest photo_suit'
+      'photo_bare_chest links'
+      'footer footer'
+      ;
+    grid-template-columns: repeat(2, 1fr); */
+  }
+
+  .links a {
+    flex-direction: column;
+  }
+
+  .links img {
+    height: 2em;
+  }
+
 }
