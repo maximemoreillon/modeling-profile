@@ -62,49 +62,30 @@ main {
 }
 
 .details_wrapper {
+  text-align: center;
+  grid-template-columns: 1fr 1fr;
   width: auto;
   margin-left: auto;
   margin-right: auto;
-  display: flex;
+  max-width: 300px;
+  display: grid;
+  grid-gap: 0.25em;
 
   flex-direction: column;
   align-items: center;
 }
 
-.detail {
-  display: flex;
-  flex-direction: column;
-}
 
-
-
-.detail:not(:last-child) {
-  margin-bottom: 1em;
-}
-
-.detail .key {
-  margin-bottom: 0.25em;
+.key {
   font-weight: bold;
 }
 
-.detail .value {
-  white-space: nowrap;
+.key:not(:first-child){
+  margin-top: 1em;
 }
 
-@media only screen and (min-width: 600px) {
-  .detail {
-    flex-direction: row;
-  }
-  .detail .key {
-    margin-right: 0.5em;
-  }
-
-  .detail .key::after {
-    content: ':';
-  }
 
 
-}
 
 
 
@@ -123,6 +104,25 @@ main {
     'logo website';
   grid-template-columns: repeat(2, auto);
   grid-gap: 0.5em 2em;
+}
+
+@media only screen and (max-width: 700px) {
+  .agency_details {
+    text-align: center;
+    grid-template-areas:
+      'logo'
+      'name'
+      'location'
+      'website';
+    grid-template-columns: auto;
+    grid-gap: 0.5em 2em;
+    justify-items: center;
+  }
+
+  .details_wrapper {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 .agency_logo {
