@@ -27,7 +27,7 @@ main {
     'footer footer'
     ;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5vw;
+  grid-gap: 5em 5vw;
 }
 
 .name {
