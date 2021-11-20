@@ -26,8 +26,8 @@ main {
     'photo_bare_chest links'
     'footer footer'
     ;
-  grid-gap: 5vw;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5vw;
 }
 
 .name {
@@ -62,7 +62,7 @@ main {
 }
 
 .details_wrapper {
-  text-align: center;
+  /* text-align: center; */
   grid-template-columns: 1fr 1fr;
   width: auto;
   margin-left: auto;
@@ -121,6 +121,21 @@ main {
 
   .details_wrapper {
     grid-template-columns: 1fr;
+  }
+
+  main {
+    /* grid-template-areas:
+      'name'
+      'photo_casual'
+      'photo_full photo_casual'
+      'photo_full personal'
+      'photo_full photo_suit'
+      'agency photo_suit'
+      'photo_bare_chest photo_suit'
+      'photo_bare_chest links'
+      'footer footer'
+      ;
+    grid-template-columns: repeat(2, 1fr); */
   }
 
 }
