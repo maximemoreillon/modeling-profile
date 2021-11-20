@@ -15,7 +15,7 @@ containerization:
     # Docker hub login
     - echo "${DOCKER_HUB_PASSWORD}" | docker login --username ${DOCKER_HUB_USERNAME} --password-stdin
     # Build the docker image
-    - docker build -t ${DOCKER_IMAGE} .
+    - docker build --build-arg CI_COMMIT_SHORT_SHA -t ${DOCKER_IMAGE} .
     # Pushing image to registry
     - docker push ${DOCKER_IMAGE}
     # Cleanup
