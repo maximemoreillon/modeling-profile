@@ -69,7 +69,7 @@ main {
   margin-right: auto;
   max-width: 300px;
   display: grid;
-  grid-gap: 0.25em;
+  grid-gap: 1em 0.25em;
 
   flex-direction: column;
   align-items: center;
