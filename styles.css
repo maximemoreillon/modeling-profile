@@ -80,15 +80,6 @@ main {
   font-weight: bold;
 }
 
-/* .key:not(:first-child){
-  margin-top: 1em;
-} */
-
-
-
-
-
-
 .agency {
   grid-area: agency;
 }
