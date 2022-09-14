@@ -1,19 +1,23 @@
 stages:
-  - containerization
-  - deployment
+  - build
+  - deploy
+
+image: moreillon/ci-dind
+services:
+  - name: docker:19.03.12-dind
 
 variables:
   APPLICATION_NAME: modeling-profile
   DOCKER_IMAGE: ${DOCKER_HUB_USERNAME}/${APPLICATION_NAME}
   CERTIFICATE_DOMAIN: modeling.maximemoreillon.com
 
-containerization:
-  stage: containerization
+build:
+  stage: build
   tags:
-    - moreillon
-  script:
-    # Docker hub login
+    - dind
+  before_script:
     - echo "${DOCKER_HUB_PASSWORD}" | docker login --username ${DOCKER_HUB_USERNAME} --password-stdin
+  script:
     # Build the docker image
     - docker build --build-arg CI_COMMIT_SHORT_SHA -t ${DOCKER_IMAGE} .
     # Pushing image to registry
@@ -21,16 +25,13 @@ containerization:
     # Cleanup
     - docker image rm ${DOCKER_IMAGE}
 
-deployment:
-  stage: deployment
+deploy:
+  only:
+    - master
+  stage: deploy
   tags:
-    - moreillon
+    - dind
+  before_script:
+    - kubectl config use-context moreillon_ci/moreillon_k8s/kubernetes-agent:cloud
   script:
-    - envsubst < kubernetes_manifest.yml | kubectl apply -f -
-    # Pull latest image by restarting the deployment
-    - kubectl rollout restart deployment/${APPLICATION_NAME}
-  environment:
-    name: production
-    kubernetes:
-      # Obtained from GitLab
-      namespace: ${KUBERNETES_NAMESPACE}
+    - envsubst < kubernetes_manifest.yml | kubectl apply -n ${KUBERNETES_NAMESPACE} -f -
