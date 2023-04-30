@@ -13,10 +13,10 @@ spec:
         app: ${APPLICATION_NAME}
     spec:
       containers:
-      - name: ${APPLICATION_NAME}
-        image: ${DOCKER_IMAGE}
-        ports:
-        - containerPort: 80
+        - name: ${APPLICATION_NAME}
+          image: ${DOCKER_IMAGE}
+          ports:
+            - containerPort: 80
 ---
 # Service, so that the deployment can communicate with other services
 apiVersion: v1
@@ -25,29 +25,31 @@ metadata:
   name: ${APPLICATION_NAME}
 spec:
   ports:
-  - port: 80
+    - port: 80
   selector:
     app: ${APPLICATION_NAME} # Name of the service
   type: ClusterIP
 ---
-# Ingress, so that the service can communicate with the exterior world
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ${APPLICATION_NAME} # Name of the ingress
+  name: ${APPLICATION_NAME}
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod" # This is necessary, no idea why
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
-  - hosts:
-    - ${CERTIFICATE_DOMAIN}
-    secretName: ${APPLICATION_NAME} # Name of the secret, i.e. the certificates
+    - hosts:
+        - ${K8S_INGRESS_HOST}
+      secretName: ${APPLICATION_NAME}
   rules:
-  - host: ${CERTIFICATE_DOMAIN}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: ${APPLICATION_NAME} # Name of the service
-          servicePort: 80
+    - host: ${K8S_INGRESS_HOST}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ${APPLICATION_NAME}
+                port:
+                  number: 80
