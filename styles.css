@@ -14,18 +14,17 @@ a {
 main {
   margin-left: auto;
   margin-right: auto;
-  max-width: 1000px;
+  max-width: 50rem;
   display: grid;
   grid-template-areas:
-    'name photo_casual'
-    'photo_full photo_casual'
-    'photo_full personal'
-    'photo_full photo_suit'
-    'agency photo_suit'
-    'photo_bare_chest photo_suit'
-    'photo_bare_chest links'
-    'footer footer'
-    ;
+    "name photo_bust"
+    "photo_casual photo_bust"
+    "photo_casual personal"
+    "photo_casual photo_suit"
+    "agency photo_suit"
+    "photo_bare_chest photo_suit"
+    "photo_bare_chest links"
+    "footer footer";
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5em 5vw;
 }
@@ -49,13 +48,18 @@ main {
   object-fit: cover;
 }
 
-
-
-
-#photo_casual { grid-area: photo_casual; }
-#photo_bare_chest { grid-area: photo_bare_chest; }
-#photo_suit { grid-area: photo_suit; }
-#photo_full { grid-area: photo_full; }
+#photo_casual {
+  grid-area: photo_casual;
+}
+#photo_bare_chest {
+  grid-area: photo_bare_chest;
+}
+#photo_suit {
+  grid-area: photo_suit;
+}
+#photo_bust {
+  grid-area: photo_bust;
+}
 
 .personal_details {
   grid-area: personal;
@@ -75,7 +79,6 @@ main {
   align-items: center;
 }
 
-
 .key {
   font-weight: bold;
 }
@@ -85,54 +88,20 @@ main {
 }
 
 .agency_details {
-  text-align: left;
-  margin-left: auto;
-  margin-right: auto;
-  display: inline-grid;
+  text-align: center;
   grid-template-areas:
-    'logo name'
-    'logo location'
-    'logo website';
-  grid-template-columns: repeat(2, auto);
+    "logo"
+    "location"
+    "website";
+  grid-template-columns: auto;
   grid-gap: 0.5em 2em;
-}
-
-@media only screen and (max-width: 700px) {
-  .agency_details {
-    text-align: center;
-    grid-template-areas:
-      'logo'
-      'name'
-      'location'
-      'website';
-    grid-template-columns: auto;
-    grid-gap: 0.5em 2em;
-    justify-items: center;
-  }
-
-  .details_wrapper {
-    grid-template-columns: 1fr;
-  }
-
-  main {
-    /* grid-template-areas:
-      'name'
-      'photo_casual'
-      'photo_full photo_casual'
-      'photo_full personal'
-      'photo_full photo_suit'
-      'agency photo_suit'
-      'photo_bare_chest photo_suit'
-      'photo_bare_chest links'
-      'footer footer'
-      ;
-    grid-template-columns: repeat(2, 1fr); */
-  }
-
+  justify-items: center;
 }
 
 .agency_logo {
-  height: 6em;
+  max-width: 12em;
+  margin: 0.5em 0;
+  object-fit: contain;
   grid-area: logo;
 }
 
@@ -141,8 +110,12 @@ main {
   grid-area: name;
 }
 
-.agency_website { grid-area: website; }
-.agency_location { grid-area: location; }
+.agency_website {
+  grid-area: website;
+}
+.agency_location {
+  grid-area: location;
+}
 
 .links {
   grid-area: links;
@@ -158,6 +131,7 @@ main {
   text-decoration: none;
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
 .links a:not(:last-child) {
@@ -171,7 +145,6 @@ main {
 .links a > * {
   margin: 0.25em;
 }
-
 
 .footer {
   color: #666666;
@@ -197,49 +170,30 @@ main {
   text-align: left;
 }
 
+body {
+  font-size: 100%;
+}
+
+.links img {
+  height: 2em;
+}
 
 @media only screen and (max-width: 700px) {
-  .agency_details {
-    text-align: center;
+  main {
     grid-template-areas:
-      'logo'
-      'name'
-      'location'
-      'website';
-    grid-template-columns: auto;
-    grid-gap: 0.5em 2em;
-    justify-items: center;
+      "name"
+      "photo_casual"
+      "personal"
+      "photo_bust"
+      "agency"
+      "photo_suit"
+      "links"
+      "photo_bare_chest"
+      "footer";
+    grid-template-columns: 1fr;
   }
 
   .details_wrapper {
     grid-template-columns: 1fr;
   }
-
-  body {
-    font-size: 100%;
-  }
-
-  main {
-    /* grid-template-areas:
-      'name'
-      'photo_casual'
-      'photo_full photo_casual'
-      'photo_full personal'
-      'photo_full photo_suit'
-      'agency photo_suit'
-      'photo_bare_chest photo_suit'
-      'photo_bare_chest links'
-      'footer footer'
-      ;
-    grid-template-columns: repeat(2, 1fr); */
-  }
-
-  .links a {
-    flex-direction: column;
-  }
-
-  .links img {
-    height: 2em;
-  }
-
 }
