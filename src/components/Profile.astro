@@ -1,0 +1,287 @@
+---
+import { Image, getImage } from "astro:assets";
+import { paths, strings, type Lang } from "../i18n";
+import { heroPhoto, photos } from "../data/photos";
+import { portfolio } from "../data/portfolio";
+import "../styles/global.css";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = strings[lang];
+const other = t.switchLanguage.lang as Lang;
+
+const birthday = new Date("1989-12-11");
+const now = new Date();
+const age =
+  now.getFullYear() -
+  birthday.getFullYear() -
+  (now < new Date(now.getFullYear(), birthday.getMonth(), birthday.getDate())
+    ? 1
+    : 0);
+
+const ogImage = await getImage({ src: heroPhoto, width: 1200 });
+
+const photoItems = await Promise.all(
+  photos.map(async (photo) => ({
+    ...photo,
+    full: await getImage({ src: photo.src, width: 1600 }),
+  })),
+);
+
+const works = await Promise.all(
+  portfolio.map(async (work) => {
+    const name = lang === "ja" ? (work.clientJa ?? work.client) : work.client;
+    const title = work.title[lang];
+    const fullPhotos = work.photos
+      ? await Promise.all(work.photos.map((src) => getImage({ src, width: 1600 })))
+      : undefined;
+    const cover = work.photos
+      ? await getImage({ src: work.photos[0], width: 800 })
+      : undefined;
+    return {
+      ...work,
+      name,
+      title,
+      caption: `${name} — ${title}`,
+      coverSrc: work.youtube
+        ? `https://i.ytimg.com/vi/${work.youtube}/hqdefault.jpg`
+        : cover?.src,
+      fullPhotos: fullPhotos?.map((image) => image.src),
+    };
+  }),
+);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.title}</title>
+    <meta name="description" content={t.description} />
+    <meta name="author" content="Maxime Moreillon" />
+    <meta name="theme-color" content="#f6f3ee" />
+
+    <link rel="canonical" href={new URL(paths[lang], Astro.site)} />
+    <link rel="alternate" hreflang="ja" href={new URL(paths.ja, Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(paths.en, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(paths.ja, Astro.site)} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={t.title} />
+    <meta property="og:description" content={t.description} />
+    <meta property="og:url" content={new URL(paths[lang], Astro.site)} />
+    <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
+
+    <link rel="icon" href="/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&display=swap"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#top">Maxime Moreillon</a>
+      <nav>
+        <a href="#photos">{t.nav.photos}</a>
+        <a href="#portfolio">{t.nav.portfolio}</a>
+        <a href="#contact">{t.nav.contact}</a>
+        <a class="language-switch" href={paths[other]} hreflang={other} lang={other}>
+          {t.switchLanguage.label}
+        </a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <Image
+          class="hero-photo"
+          src={heroPhoto}
+          width={1400}
+          widths={[600, 1000, 1400]}
+          sizes="(max-width: 760px) 100vw, 50vw"
+          alt={t.heroAlt}
+          loading="eager"
+          fetchpriority="high"
+        />
+
+        <div class="hero-text">
+          <p class="eyebrow">{t.eyebrow}</p>
+          <h1>Maxime<br />Moreillon</h1>
+          <p class="name-ja" lang="ja">モレヨン マキシム</p>
+
+          <dl class="stats">
+            <div><dt>{t.stats.height}</dt><dd>180 cm</dd></div>
+            <div><dt>{t.stats.weight}</dt><dd>71 kg</dd></div>
+            <div><dt>{t.stats.bust}</dt><dd>108 cm</dd></div>
+            <div><dt>{t.stats.waist}</dt><dd>80 cm</dd></div>
+            <div><dt>{t.stats.hips}</dt><dd>92 cm</dd></div>
+            <div><dt>{t.stats.shoes}</dt><dd>28 cm</dd></div>
+            <div>
+              <dt>{t.stats.age}</dt>
+              <dd data-birthday="1989-12-11" data-template={t.age}>
+                {t.age.replace("{age}", String(age))}
+              </dd>
+            </div>
+            <div><dt>{t.stats.nationality}</dt><dd>{t.nationality}</dd></div>
+          </dl>
+
+          <div class="agency">
+            <span class="agency-label">{t.representedBy}</span>
+            <a href="https://solinee.jp/model/maxime/">
+              <img src="/images/solinee-logo.png" width="300" height="56" alt="SOLINÉE" />
+            </a>
+          </div>
+
+          <a
+            class="hero-instagram"
+            href="https://www.instagram.com/maxime_moreillon_modeling/"
+          >
+            <img src="/images/instagram.svg" width="20" height="20" alt="" />
+            @maxime_moreillon_modeling
+          </a>
+        </div>
+      </section>
+
+      <section id="photos" class="section">
+        <h2>{t.sections.photos}</h2>
+        <ul class="photo-grid">
+          {
+            photoItems.map((photo) => (
+              <li>
+                <button type="button" data-full={photo.full.src}>
+                  <Image
+                    src={photo.src}
+                    width={800}
+                    widths={[400, 800]}
+                    sizes="(max-width: 760px) 50vw, 33vw"
+                    alt={photo.alt[lang]}
+                  />
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section id="portfolio" class="section">
+        <h2>{t.sections.portfolio}</h2>
+        <ul class="work-grid">
+          {
+            works.map((work) => {
+              const opensLightbox = Boolean(work.youtube || work.fullPhotos);
+              const Tag = opensLightbox ? "button" : "a";
+              const attributes = opensLightbox
+                ? {
+                    type: "button" as const,
+                    "data-caption": work.caption,
+                    "data-youtube": work.youtube,
+                    "data-photos": work.fullPhotos && JSON.stringify(work.fullPhotos),
+                  }
+                : { href: work.url, target: "_blank", rel: "noopener" };
+              return (
+                <li class="work">
+                  <Tag
+                    class:list={["work-link", { "is-video": work.youtube }]}
+                    {...attributes}
+                  >
+                    {work.coverSrc ? (
+                      <span class="work-cover">
+                        <img
+                          src={work.coverSrc}
+                          alt=""
+                          loading="lazy"
+                          style={
+                            work.coverPosition &&
+                            `object-position: ${work.coverPosition}`
+                          }
+                        />
+                      </span>
+                    ) : (
+                      <span class="work-placeholder">{work.name}</span>
+                    )}
+                    <span class="work-meta">
+                      <span class="work-client">
+                        {work.name}
+                        {lang === "en" && work.clientJa && (
+                          <span lang="ja">{work.clientJa}</span>
+                        )}
+                      </span>
+                      <span class="work-title">
+                        {work.title} · {work.year}
+                        {!opensLightbox && " ↗"}
+                      </span>
+                    </span>
+                  </Tag>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </section>
+
+      <section id="agencies" class="section">
+        <h2>{t.sections.agencies}</h2>
+        <ul class="credits">
+          <li>
+            <span class="credit-year">{t.agencies.solinee}</span>
+            <span class="credit-client">SOLINÉE</span>
+            <span class="credit-title">{t.agencies.location}</span>
+          </li>
+          <li>
+            <span class="credit-year">{t.agencies.azs}</span>
+            <span class="credit-client">AZS Entertainment</span>
+            <span class="credit-title">{t.agencies.location}</span>
+          </li>
+        </ul>
+      </section>
+
+      <section id="contact" class="section contact">
+        <h2>{t.sections.contact}</h2>
+        <ul class="contact-links">
+          <li>
+            <a href="https://solinee.jp/model/maxime/">
+              <img src="/images/solinee-logo.png" width="300" height="56" alt="SOLINÉE" />
+              {t.solineeProfile}
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/maxime_moreillon_modeling/">
+              <img src="/images/instagram.svg" alt="" />
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a href="https://maximemoreillon.com">
+              <img src="/images/logo.png" alt="" />
+              maximemoreillon.com
+            </a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <img src="/images/logo.png" width="32" height="32" alt="" />
+      <span>© <span id="year">{now.getFullYear()}</span> Maxime Moreillon</span>
+    </footer>
+
+    <dialog id="lightbox" aria-label={t.lightbox.label}>
+      <button type="button" class="lightbox-close" aria-label={t.lightbox.close}>×</button>
+      <button type="button" class="lightbox-prev" aria-label={t.lightbox.prev}>‹</button>
+      <div class="lightbox-content"></div>
+      <button type="button" class="lightbox-next" aria-label={t.lightbox.next}>›</button>
+      <p class="lightbox-caption"></p>
+    </dialog>
+
+    <script>
+      import "../scripts/main";
+    </script>
+  </body>
+</html>
