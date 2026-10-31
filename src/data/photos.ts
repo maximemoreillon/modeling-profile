@@ -6,6 +6,8 @@ import casual from "../assets/profile/casual.jpg";
 import street from "../assets/profile/street.jpg";
 import suit from "../assets/profile/suit.jpg";
 import shirtless from "../assets/profile/shirtless.jpg";
+import darkShirtWall from "../assets/profile/dark-shirt-wall.jpg";
+import navyTeeOutdoor from "../assets/profile/navy-tee-outdoor.jpg";
 
 export { default as heroPhoto } from "../assets/profile/white-tee.jpg";
 
@@ -24,6 +26,13 @@ export const photos: Photo[] = [
     },
   },
   {
+    src: darkShirtWall,
+    alt: {
+      en: "Leaning against a wall in a dark shirt",
+      ja: "壁にもたれたダークシャツ姿",
+    },
+  },
+  {
     src: casual,
     alt: {
       en: "Seated in a navy jacket and jeans",
@@ -33,6 +42,13 @@ export const photos: Photo[] = [
   {
     src: street,
     alt: { en: "Full body, walking in the city", ja: "街を歩く全身ショット" },
+  },
+  {
+    src: navyTeeOutdoor,
+    alt: {
+      en: "Navy T-shirt and necklace, outdoors",
+      ja: "ネイビーのTシャツとネックレスの屋外ショット",
+    },
   },
   {
     src: suit,
