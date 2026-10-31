@@ -1,7 +1,6 @@
 # Modeling profile
 
-Deployed at https://modeling.maximemoreillon.com/ via GitHub Pages.
-Japanese at `/`, English at `/en/`.
+Deployed at https://modeling.maximemoreillon.com/ via GitHub Pages. Japanese at `/`, English at `/en/`.
 
 Built with [Astro](https://astro.build) and TypeScript. Pushing to `master` builds and deploys the site with GitHub Actions (`.github/workflows/deploy.yml`).
 
