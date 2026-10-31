@@ -1,7 +1,7 @@
 import type { ImageMetadata } from "astro";
 import type { Localized } from "../i18n";
 
-import headshot from "../assets/profile/headshot.webp";
+import camelCoat from "../assets/profile/camel-coat.jpg";
 import casual from "../assets/profile/casual.jpg";
 import street from "../assets/profile/street.jpg";
 import suit from "../assets/profile/suit.jpg";
@@ -19,7 +19,7 @@ export interface Photo {
 // Shown in the Photos section, in this order
 export const photos: Photo[] = [
   {
-    src: headshot,
+    src: camelCoat,
     alt: {
       en: "In a camel coat, outdoors",
       ja: "キャメルのコートを着た屋外ポートレート",
